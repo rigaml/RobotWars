@@ -34,11 +34,20 @@ namespace RobotWars.Library
         /// <param name="instruction">The instruction to process. According to the task specification, "1.Only a single instruction can be sent at once", 
         /// so only one character is processed.</param>
         /// <returns>A tuple containing the robot's position (X and Y), direction, and penalties incurred since created.</returns>
-        /// <exception cref="NotSupportedException">Thrown when the instruction is not supported.</exception>
         public (int x, int y, char direction, int penalties) Process(char instruction)
         {
-            var robotCommand= RobotCommandFactory.Create(instruction);
-            _robotState= robotCommand.Apply(_robotState, _arena);
+            try
+            {
+                var robotCommand= RobotCommandFactory.Create(instruction);
+                _robotState= robotCommand.Apply(_robotState, _arena);
+            }
+            catch (NotSupportedException ex)
+            {
+                // Skipping invalid input instructions to avoid robot crashing.
+                // Instead of `Console.WriteLine` use a logger to log the issue.
+                Console.WriteLine($"Invalid instruction '{instruction}': {ex.Message}");
+            }
+
             return _robotState.GetState();
         }
     }

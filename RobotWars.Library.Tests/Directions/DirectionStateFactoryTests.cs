@@ -46,7 +46,7 @@ namespace RobotWars.Library.Tests.Directions
         {
             var invalidDirection = 'X';
 
-            var ex = Assert.Throws<NotSupportedException>(() => DirectionStateFactory.Create(invalidDirection));
+            var ex = Assert.Throws<NotImplementedException>(() => DirectionStateFactory.Create(invalidDirection));
         }
     }
 }

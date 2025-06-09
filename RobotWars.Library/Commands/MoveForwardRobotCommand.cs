@@ -15,7 +15,7 @@
         public RobotState Apply(RobotState robotState, IArena arena)
         {
             if (robotState.Direction.CanMoveForward(robotState.Position, arena))
-            {
+            { 
                 var newPosition = robotState.Direction.MoveForward(robotState.Position, arena);
                 return new RobotState(newPosition, robotState.Direction, robotState.Penalties);
             }

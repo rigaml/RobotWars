@@ -4,6 +4,8 @@ namespace RobotWars.Library.Tests
 {
     public class RobotTests
     {
+        private const char _defaultDirection = 'N';
+
         private Arena _defaultTestArena;
         private Position _defaultTestPosition;
         private IDirectionState _defaultTestDirectionState;
@@ -13,7 +15,7 @@ namespace RobotWars.Library.Tests
         {
             _defaultTestArena = new Arena(5, 5);
             _defaultTestPosition = new Position(0, 0);
-            _defaultTestDirectionState = DirectionStateFactory.Create('N');
+            _defaultTestDirectionState = DirectionStateFactory.Create(_defaultDirection);
         }
 
         [Test]
@@ -24,15 +26,22 @@ namespace RobotWars.Library.Tests
         }
 
         [TestCase("")]
+        [TestCase(' ')]
         [TestCase('*')]
-        public void Move_WhenIntructionInvalid_ThrowsArgumentException(char instruction)
+        public void Move_WhenInstructionInvalid_ThrowsArgumentException(char instruction)
         {
             var robot = new Robot(_defaultTestArena, _defaultTestPosition, _defaultTestDirectionState);
 
-            Assert.Throws<NotSupportedException>(() => robot.Process(instruction));
+            var result= robot.Process(instruction);
+
+            Assert.That(result.x, Is.EqualTo(_defaultTestPosition.X));
+            Assert.That(result.y, Is.EqualTo(_defaultTestPosition.Y));
+            Assert.That(result.direction, Is.EqualTo(_defaultDirection));
+            Assert.That(result.penalties, Is.EqualTo(0));
         }
 
-        public void Move_WhenIntructionValidLowerCase_ShouldPerformActionAndReturnRobotState()
+        [Test]
+        public void Move_WhenInstructionValidLowerCase_ShouldPerformActionAndReturnRobotState()
         {
             var robot = new Robot(_defaultTestArena, _defaultTestPosition, _defaultTestDirectionState);
 
@@ -47,7 +56,7 @@ namespace RobotWars.Library.Tests
 
         [TestCase('L', 'W')]
         [TestCase('R', 'E')]
-        public void Move_WhenIntructionIsTurn_ReturnsSamePositionAndPenaltyButRotated(
+        public void Move_WhenInstructionIsTurn_ReturnsSamePositionAndPenaltyButRotated(
             char instructionCode, 
             char expectedDirection)
         {

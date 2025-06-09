@@ -14,7 +14,7 @@
                 'S' => new DirectionSouth(),
                 'E' => new DirectionEast(),
                 'W' => new DirectionWest(),
-                _ => throw new NotSupportedException($"Invalid direction: {direction}")
+                _ => throw new NotImplementedException($"Invalid direction: {direction}")
             };
         }
     }
