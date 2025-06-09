@@ -1,4 +1,4 @@
-# Robot Wars
+# Robot Wars (yet another Mars rover kata)
 
 ## Project description
 
@@ -13,3 +13,9 @@ Each robot is controlled remotely by sending movement instructions. The simple c
 Each robot must be given an initial location at the start of the battle and must be able report its current location after any subsequent movements.
 
 When a supplied movement instruction causes a robot to collide with the arena boundary then a penalty needs to be applied. The total number of penalties needs to be recorded so that bad navigation can be dealt with after the battle. If a collision occurs the position of the robot remains unchanged.
+
+## Enhancements
+Implementing the following enhancements as Git branches:
+- Wrapping: If the robot reaches the end of the area and moves forward, it will reappear at the beginning of the area (position 0) for that coordinate.
+- Enhanced Instruction Set: Add more commands (e.g., "jump", "backward") or macros for predefined sequences.
+- Obstacles: Introduce obstacles in the arena that robots must navigate around. If a robot attempts to move into an obstacle, it should not move and the penalty count should increase.
